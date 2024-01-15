@@ -2,6 +2,8 @@ package com.springboot.board.service;
 
 import java.util.*;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.springboot.board.dto.BoardDTO;
@@ -33,4 +35,20 @@ public class BoardService {
         return boardDTOList;
     }
     
+    @Transactional
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
+    }
+
+    public BoardDTO findById(Long id) {
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+        if (optionalBoardEntity.isPresent()) {
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+            return boardDTO;
+        } else {
+            return null;
+        }
+    }
+
 }
