@@ -34,7 +34,7 @@ public class BoardService {
 
         return boardDTOList;
     }
-    
+
     @Transactional
     public void updateHits(Long id) {
         boardRepository.updateHits(id);
@@ -51,11 +51,11 @@ public class BoardService {
         }
     }
 
-	public BoardDTO update(BoardDTO boardDTO) {
+    public BoardDTO update(BoardDTO boardDTO) {
         BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
-		boardRepository.save(boardEntity);
+        boardRepository.save(boardEntity);
         return findById(boardDTO.getId());
-	}
+    }
 
     public void delete(Long id) {
         boardRepository.deleteById(id);
