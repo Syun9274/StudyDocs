@@ -49,7 +49,7 @@ public class BoardController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateForm(@PathVariable Long id, Model  model) {
+    public String updateForm(@PathVariable Long id, Model model) {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("boardUpdate", boardDTO);
         return "update";
