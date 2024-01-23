@@ -4,6 +4,8 @@ import com.springboot.board.entity.BoardEntity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,15 @@ public class BoardDTO {
     private LocalDateTime boardCreatedTime;
     private LocalDateTime boardUpdatedTime;
 
+    // save.html -> Controller 파일 담는 용도
+    private MultipartFile boardFile;
+    // 원본 파일 이름
+    private String originalFileName;
+    // 서버 저장용 파일 이름
+    private String storedFileName;
+    // 파일 첨부 여부(첨부 1, 미첨부 0)
+    private int fileAttached;
+
     public BoardDTO(Long id, String boardWriter, String boardTitle, int boardHits, LocalDateTime boardCreatedTime) {
         this.id = id;
         this.boardWriter = boardWriter;
@@ -46,6 +57,19 @@ public class BoardDTO {
         boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
         
+        if (boardEntity.getFileAttached() == 0) {
+            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
+        } else {
+            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 1
+            // 파일 이름을 가져가야 함
+            // originalFileName, storedFileName : board_file_table(BoardFileEntity)
+            // join
+            // select * from board_table b, board_file_table bf where b.id=bf.board_id
+            // and where b.id=?
+            boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
+            boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
+        }
+
         return boardDTO;
     }
 }

@@ -1,5 +1,6 @@
 package com.springboot.board.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+    
     private final BoardService boardService;
 
     @GetMapping("/save")
@@ -30,7 +32,7 @@ public class BoardController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) {
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         boardService.save(boardDTO);
         return "index";
     }
