@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springboot.board.dto.BoardDTO;
+import com.springboot.board.dto.CommentDTO;
 import com.springboot.board.service.BoardService;
+import com.springboot.board.service.CommentService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,8 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
-    
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -49,6 +51,8 @@ public class BoardController {
         /* 해당 게시글의 조회 수를 1 올리고, 게시글 데이터를 가져와서 detail.html에 출력 */
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        model.addAttribute("commentList", commentDTOList);
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
         return "detail";
