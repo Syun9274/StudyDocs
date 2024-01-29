@@ -1,3 +1,5 @@
+## [강의 영상](https://www.youtube.com/playlist?list=PLV9zd3otBRt7jmXvwCkmvJ8dH5tR_20c0)
+
 # 게시판 주요 기능
 | 기능 | 주소 |
 | --- | --- |
