@@ -2,6 +2,7 @@ package com.springboot.board2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -13,7 +14,7 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
-    
+
     @GetMapping("/board/write") // localhost:{port}/board/write
     public String boardWriteForm() {
 
@@ -27,4 +28,13 @@ public class BoardController {
 
         return " ";
     }
+
+    @GetMapping("/board/list")
+    public String boardList(Model model) {
+
+        model.addAttribute("list", boardService.boardList());
+
+        return "boardlist";
+    }
+
 }
